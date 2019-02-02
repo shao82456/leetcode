@@ -404,5 +404,25 @@ public class Solution {
         }
         return memo.get(root);
     }
+
+    /***
+     * 279. Perfect Squares
+     * 用最少的平方数组成一个数
+     * 思路，能选的数为1...sqr(n)，由于能选一，因此贪心可以求出解，但不是最优解
+     * ｄp:对于每个数，都只有两个状态，即选和不选
+     * 自顶向下递归求解
+     * @param n
+     * @return
+     */
+    public int numSquares(int n) {
+        return numSquares1(n,1);
+    }
+
+    private int numSquares1(int n, int k) {
+        int k2=k*k;
+        if(k2>n) return Integer.MAX_VALUE-1;
+        else if(k2==n) return 1;
+        else return Math.min((1+numSquares1(n-k2,k)),(numSquares1(n,k+1)));
+    }
 }
 

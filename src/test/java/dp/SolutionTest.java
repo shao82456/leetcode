@@ -5,39 +5,40 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class SolutionTest {
-    Solution solution=new Solution();
+    Solution solution = new Solution();
+
     @Test
     public void lengthOfLIS1() {
-        int[] input={10,9,2,5,3,7,101,18};
-        int res=solution.lengthOfLIS1(input);
+        int[] input = {10, 9, 2, 5, 3, 7, 101, 18};
+        int res = solution.lengthOfLIS1(input);
         System.out.println(res);
     }
 
     @Test
     public void lengthOfLIS2() {
-        int[] input={10,9,2,5,3,7,101,18};
-        int[] input1={2,1,4,3};
-        int res=solution.lengthOfLIS2(input1);
+        int[] input = {10, 9, 2, 5, 3, 7, 101, 18};
+        int[] input1 = {2, 1, 4, 3};
+        int res = solution.lengthOfLIS2(input1);
         System.out.println(res);
     }
 
     @Test
-    public void uniquePaths(){
-        int m=1,n=9;
-        System.out.println(solution.uniquePaths2(m,n));
+    public void uniquePaths() {
+        int m = 1, n = 9;
+        System.out.println(solution.uniquePaths2(m, n));
     }
 
     @Test
-    public void uniquePathsII(){
-        int[][] obstacleGrid={{1,3,1},{1,5,1},{4,2,1}};
+    public void uniquePathsII() {
+        int[][] obstacleGrid = {{1, 3, 1}, {1, 5, 1}, {4, 2, 1}};
         System.out.println(solution.uniquePathsII(obstacleGrid));
     }
 
     @Test
     public void uniquePathsIII() {
-        int[][] grid=
-                {{1,0,0,0},{0,0,0,0},{0,0,2,-1}};
-        int res=solution.uniquePathsIII(grid);
+        int[][] grid =
+                {{1, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 2, -1}};
+        int res = solution.uniquePathsIII(grid);
         System.out.println(res);
     }
 
@@ -49,19 +50,24 @@ public class SolutionTest {
 
     @Test
     public void rob() {
-        int[] input1={1,2,3,1,12,3,3,4};
-        int[] input2={1,2,3,1};
-        int res=solution.rob(input1);
+        int[] input1 = {1, 2, 3, 1, 12, 3, 3, 4};
+        int[] input2 = {1, 2, 3, 1};
+        int res = solution.rob(input1);
         System.out.println(res);
     }
 
     @Test
     public void robII() {
-        int[] input1={2,3,2};
-        int[] input2={1,2,3,1};
-        int res=solution.robII(input2);
+        int[] input1 = {2, 3, 2};
+        int[] input2 = {1, 2, 3, 1};
+        int res = solution.robII(input2);
         System.out.println(res);
     }
 
-
+    @Test
+    public void numSquares() {
+        int n = 6;
+        int res = solution.numSquares(n);
+        System.out.println(res);
+    }
 }
