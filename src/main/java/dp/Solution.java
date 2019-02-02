@@ -79,4 +79,124 @@ public class Solution {
         return memo[prepos+1][curpos];
     }
 
+    /**
+     * 62. Unique Paths
+     */
+    public int uniquePaths(int m, int n) {
+        return uniquePaths(m,n,0,0);
+    }
+
+    private int uniquePaths(int m, int n, int i, int j) {
+        if(i==m-1&&j==n-1) return 1;
+        int all=0;
+        if(i+1<m)
+            all+=uniquePaths(m,n,i+1,j);
+        if(j+1<n)
+            all+=uniquePaths(m,n,i,j+1);
+        return all;
+    }
+
+    /**
+     * memory search
+     * @param m
+     * @param n
+     * @return
+     */
+    public int uniquePaths1(int m, int n) {
+        int[][] memo=new int[m][n];
+        for(int[] l:memo)
+            Arrays.fill(l,-1);
+        memo[m-1][n-1]=1;
+
+        return uniquePaths1(m,n,0,0,memo);
+    }
+
+    private int uniquePaths1(int m, int n, int i, int j,int[][] memo) {
+        if(memo[i][j]==-1) {
+            int all=0;
+            if(i+1<m){
+                if(memo[i+1][j]==-1)
+                    memo[i+1][j]=uniquePaths1(m,n,i+1,j,memo);
+                all+=memo[i+1][j];
+            }
+            if(j+1<n){
+                if(memo[i][j+1]==-1)
+                    memo[i][j+1]=uniquePaths1(m,n,i,j+1,memo);
+                all+=memo[i][j+1];
+            }
+            memo[i][j]=all;
+        }
+        return memo[i][j];
+    }
+
+    public int uniquePaths2(int m, int n) {
+        if(m==0||n==0) return 0;
+        int[][] dp=new int[m][n];
+        Arrays.fill(dp[m-1],1);
+        for(int i=0;i<m;i++)
+            dp[i][n-1]=1;
+
+        for(int i=m-2;i>=0;i--){
+            for(int j=n-2;j>=0;j--)
+                dp[i][j]=dp[i+1][j]+dp[i][j+1];
+        }
+
+        return dp[0][0];
+    }
+
+    /***
+     * 63. Unique Paths II
+     * ruguo local[i][j] has obstacle,then we get from local[i][j] we have no path to arrive final place
+     */
+
+    public int uniquePathsII(int[][] obstacleGrid) {
+        int m=obstacleGrid.length,n=obstacleGrid[0].length;
+        int[][] dp=new int[m][n];
+        dp[m-1][n-1]=obstacleGrid[m-1][n-1]==1?0:1;
+
+        for(int j=n-2;j>=0;j--) {
+            if(obstacleGrid[m-1][j]==0)
+                dp[m-1][j] = dp[m-1][j+1];
+        }
+
+        for(int i=m-2;i>=0;i--){
+            if(obstacleGrid[i][n-1]==0)
+                dp[i][n-1]=dp[i+1][n-1];
+        }
+
+        for(int i=m-2;i>=0;i--){
+            for(int j=n-2;j>=0;j--)
+                if(obstacleGrid[i][j]==0)
+                    dp[i][j]=dp[i+1][j]+dp[i][j+1];
+        }
+
+        return dp[0][0];
+    }
+
+    /***
+     * 64 Minimum path sum
+     * @param grid
+     * @return
+     */
+    public int minPathSum(int[][] grid) {
+        int m=grid.length,n=grid[0].length;
+        int[][] dp=new int[m][n];
+        dp[m-1][n-1]=grid[m-1][n-1];
+
+        for(int j=n-2;j>=0;j--) {
+            dp[m-1][j] = grid[m-1][j]+dp[m-1][j+1];
+        }
+
+        for(int i=m-2;i>=0;i--){
+            dp[i][n-1]=grid[i][n-1]+dp[i+1][n-1];
+        }
+
+        for(int i=m-2;i>=0;i--){
+            for(int j=n-2;j>=0;j--)
+                dp[i][j]=grid[i][j]+Math.min(dp[i+1][j],dp[i][j+1]);
+        }
+
+        return dp[0][0];
+    }
 }
+

@@ -20,4 +20,22 @@ public class SolutionTest {
         int res=solution.lengthOfLIS2(input1);
         System.out.println(res);
     }
+
+    @Test
+    public void uniquePaths(){
+        int m=1,n=9;
+        System.out.println(solution.uniquePaths2(m,n));
+    }
+
+    @Test
+    public void uniquePathsII(){
+        int[][] obstacleGrid={{1,3,1},{1,5,1},{4,2,1}};
+        System.out.println(solution.uniquePathsII(obstacleGrid));
+    }
+
+    @Test
+    public void minPathSum(){
+        int[][] grid={{1,3,1},{1,5,1},{4,2,1}};
+        System.out.println(solution.minPathSum(grid));
+    }
 }
