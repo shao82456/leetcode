@@ -20,4 +20,28 @@ public class SolutionTest {
         int res=solution.lengthOfLIS2(input1);
         System.out.println(res);
     }
+
+    @Test
+    public void rob() {
+        int[] input1={1,2,3,1,12,3,3,4};
+        int[] input2={1,2,3,1};
+        int res=solution.rob(input1);
+        System.out.println(res);
+    }
+
+    @Test
+    public void robII() {
+        int[] input1={2,3,2};
+        int[] input2={1,2,3,1};
+        int res=solution.robII(input2);
+        System.out.println(res);
+    }
+
+    @Test
+    public void uniquePathsIII() {
+        int[][] grid=
+                {{1,0,0,0},{0,0,0,0},{0,0,2,-1}};
+        int res=solution.uniquePathsIII(grid);
+        System.out.println(res);
+    }
 }

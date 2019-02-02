@@ -1,12 +1,10 @@
 package offer;
 
-import sun.reflect.generics.tree.Tree;
-
 public class TestTree {
     public static void main(String[] args) {
-        int[] arr={1,2,3,5,-1,4,6};
+        int[] arr={1,3,-1,7,5,-1,-1,6,-1,-1,-1};
         TreeNode root= TreeNode.getTreeByLevelOrder(arr,-1);
-        preorder(root);
+        BSTkNode test=new BSTkNode();
     }
     public static void preorder(TreeNode root){
         if(root!=null){
