@@ -424,5 +424,87 @@ public class Solution {
         else if(k2==n) return 1;
         else return Math.min((1+numSquares1(n-k2,k)),(numSquares1(n,k+1)));
     }
+
+    /**
+     * dp版,申请二维数组，填表即可，可以优化到一维
+     * @param n
+     * @return
+     */
+//    public int numSquares2(int n) {
+//
+//
+//    }
+
+    /**
+     * 983. Minimum Cost For Tickets
+     * @param days
+     * @param costs
+     * @return
+     */
+    public int mincostTickets(int[] days, int[] costs) {
+        if (null==days||days.length==0) return 0;
+        int res=mincostTickets(days,costs,0);
+        return res;
+    }
+
+    /**
+     * 这个函数表示在当前天要买票（因为没有票覆盖到这一天），可以选择买三种票，1d,7d,30d
+     * @param days
+     * @param costs
+     * @param k  当期日期索引
+     * @return 表示cover从当前天到最后一天最少需要的票钱
+     */
+    private int mincostTickets(int[] days, int[] costs, int k) {
+        if(k==days.length-1)
+            return Math.min(costs[0],Math.min(costs[1],costs[2]));
+        int buyt1=costs[0]+mincostTickets(days,costs,k+1);
+
+        int lastday=days[days.length-1];
+        int buyt2=costs[1];
+        if(lastday>=days[k]+7){
+            int nextk=k+1;
+            while(days[nextk]<days[k]+7) nextk++;
+            buyt2+=mincostTickets(days,costs,nextk);
+        }
+        int buyt3=costs[2];
+        if(lastday>=days[k]+30){
+            int nextk=k+1;
+            while(days[nextk]<days[k]+30) nextk++;
+            buyt3+=mincostTickets(days,costs,nextk);
+        }
+        return Math.min(buyt1,Math.min(buyt2,buyt3));
+    }
+
+    /**
+     * dp解法，同时直接保存356天数据，避免对计算到底能覆盖到哪天
+     * @param days
+     * @param costs
+     * @return
+     */
+    public int mincostTickets2(int[] days, int[] costs) {
+        if (null==days||days.length==0) return 0;
+        int[] dp=new int[366+30];
+        int lastday=days[days.length-1];
+        dp[lastday]=Math.min(costs[0],Math.min(costs[1],costs[2]));
+
+        int k=days.length-2; // k表示存在的那天的下表
+        for(int i=lastday-1;i>=1;i--){
+            //days[k]表示要计算的那天的日期
+            //如果当前日期和要计算的日期相等，就计算，否则，就赋值为后面那天的值
+            if(k>=0&&i==days[k]){
+                int buy1=costs[0]+dp[i+1];
+                int buy2=costs[1]+dp[i+7];
+                int buy3=costs[2]+dp[i+30];
+                dp[i]=Math.min(buy1,Math.min(buy2,buy3));
+                k--; //找下一天
+            }else
+                dp[i]=dp[i+1];
+        }
+        return dp[1];
+    }
+
+    /**
+     * 263. Ugly Number
+     */
 }
 

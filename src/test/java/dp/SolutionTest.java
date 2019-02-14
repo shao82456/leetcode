@@ -70,4 +70,12 @@ public class SolutionTest {
         int res = solution.numSquares(n);
         System.out.println(res);
     }
+
+    @Test
+    public void mincostTickets(){
+        int[] days = {1,4,6,7,8,20};
+        int[] costs = {2,7,15};
+        int res=solution.mincostTickets2(days,costs);
+        System.out.println(res);
+    }
 }
