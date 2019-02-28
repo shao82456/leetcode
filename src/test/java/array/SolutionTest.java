@@ -20,7 +20,7 @@ public class SolutionTest {
                 int[] a = new int[nums.size()];
                 for (int i = 0; i < a.length; i++)
                     a[i] = nums.get(i);
-                sol.findMin2(a);
+                sol.findMin(a);
             }
         }
         long end=System.currentTimeMillis();
