@@ -13,4 +13,12 @@ public class TestTree {
             preorder(root.right);
         }
     }
+
+    public static void inorder(TreeNode root){
+        if(root!=null){
+            inorder(root.left);
+            System.out.println(root.val);
+            inorder(root.right);
+        }
+    }
 }
