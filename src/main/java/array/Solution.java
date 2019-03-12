@@ -2,6 +2,42 @@ package array;
 
 public class Solution {
     /**
+     * 5. Longest Palindromic Substring
+     */
+
+    public String longestPalindrome(String s) {
+        if(s==null||s.length()<2)
+            return s;
+        String res="";
+        int maxlen=0;
+        char[] chs=s.toCharArray();
+
+        //判断奇数个
+        for(int i=1;i<=chs.length-2;i++){
+            int j=1;
+            for(;i-j>=0&&i+j<chs.length&&chs[i+j]==chs[i-j];j++);
+            j--;//j退到正确值
+            if(maxlen<(j*2+1)){
+                maxlen=j*2+1;
+                res=s.substring(i-j,i+j+1);
+            }
+        }
+
+        //判断偶数个
+        for(int i=0;i<=chs.length-2;i++){
+            int j=1;
+            for(;i-j+1>=0&&i+j<chs.length&&chs[i+j]==chs[i-j+1];j++);
+            j--;//j退到正确值
+            if(maxlen<(j*2)){
+                maxlen=j*2;
+                res=s.substring(i-j+1,i+j+1);
+            }
+        }
+
+        return maxlen==0?s.charAt(0)+"":res;
+    }
+
+    /**
      * 153 Find Minimum in Rotated Sorted Array
      * 元素无重复，思路简单
      * @param nums
@@ -22,6 +58,7 @@ public class Solution {
         else
             return _findMin(nums,p, q);
     }
+
 
     /**
      * 154. Find Minimum in Rotated Sorted Array II

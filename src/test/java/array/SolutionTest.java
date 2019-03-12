@@ -27,4 +27,10 @@ public class SolutionTest {
         System.out.println((end-begin)/1000.0);
     }
 
+    @Test
+    public void longestPalindrome() {
+        String str="ac";
+        String res=sol.longestPalindrome(str);
+        System.out.println(res);
+    }
 }
