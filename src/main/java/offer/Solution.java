@@ -239,4 +239,20 @@ public class Solution {
         }
         return;
     }
+
+    public ListNode ReverseList(ListNode head) {
+        ListNode dummyhead=new ListNode(-1);
+        ListNode last=reverseList(head,dummyhead);
+        last.next=null;
+        return dummyhead.next;
+    }
+
+    private ListNode reverseList(ListNode head, ListNode dummyhead) {
+        if(head!=null){
+            ListNode last=reverseList(head.next,dummyhead);
+            last.next=head;
+            return head;
+        }
+        return dummyhead;
+    }
 }

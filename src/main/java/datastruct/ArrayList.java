@@ -1,6 +1,7 @@
 package datastruct;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class ArrayList<T> implements Iterable<T>{
@@ -39,6 +40,12 @@ public class ArrayList<T> implements Iterable<T>{
     }
     public boolean add(T ele){
         add(size(),ele);
+        return true;
+    }
+
+    public boolean addAll(List<T> list){
+        for(T ele:list)
+            add(ele);
         return true;
     }
 
