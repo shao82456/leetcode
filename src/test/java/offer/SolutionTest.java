@@ -3,6 +3,7 @@ package offer;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -34,5 +35,12 @@ public class SolutionTest {
         TreeNode res=solution.reConstructBinaryTree(pre,in);
         TestTree.preorder(res);
         TestTree.inorder(res);
+    }
+
+    @Test
+    public void reOrderArray() {
+        int[] arr={0,1,2,3,4,5};
+        solution.reOrderArray(arr);
+        System.out.println(Arrays.toString(arr));
     }
 }

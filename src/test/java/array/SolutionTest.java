@@ -2,9 +2,11 @@ package array;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import array.Solution.Interval;
 
 public class SolutionTest {
     Solution sol=new Solution();
@@ -34,5 +36,28 @@ public class SolutionTest {
         System.out.println(res);
     }
 
+    public void merge() {
+        List<Interval> in = new ArrayList<>();
+        in.add(new Interval(2, 3));
+        in.add(new Interval(2, 2));
+        in.add(new Interval(3, 3));
+        in.add(new Interval(1, 3));
+        in.add(new Interval(5, 7));
+        in.add(new Interval(2, 2));
+        in.add(new Interval(4, 6));
 
+        List<Interval> res = sol.merge(in);
+        for (Interval interval : in) {
+            System.out.println(interval.start + " " + interval.end);
+        }
+    }
+
+    @Test
+    public void spiralOrder() {
+        int[][] map={
+                { 1, 2, 3,4 },
+                { 5, 6, 7,8 },
+                { 8, 9,10,11 }};
+        System.out.println(sol.spiralOrder(map));
+    }
 }

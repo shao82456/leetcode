@@ -104,7 +104,7 @@ public class Sort1 {
         }
     }
     public static void main(String[] args) {
-        testSort(new MergeSort());
+        testSort(new BubbleSort());
     }
 
     static void testSort(Sorter sorter){

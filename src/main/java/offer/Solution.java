@@ -197,4 +197,46 @@ public class Solution {
 
         return _minNumberInRotateArray1(arr,p,q);//p>q
     }
+
+    /**
+     *
+     输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。
+     */
+    public int NumberOf1(int n) {
+        int res=0;
+        while(n!=0){
+            if((n&1)==1) res++;
+            n=n>>>1;
+        }
+        return res;
+    }
+
+    /**
+     * 给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。
+     * @param base
+     * @param exponent
+     * @return
+     */
+    public double Power(double base, int exponent) {
+        return -1;
+    }
+
+    /**
+     * 调整数组顺序使奇数位于偶数前面
+     * @param array
+     */
+    public void reOrderArray(int [] array) {
+        if(array==null||array.length<2)
+            return;
+        int j=-1;
+        for(int i=0;i<array.length;i++){
+            if(array[i]%2==0)
+                continue;
+            int key=array[i];
+            for(int k=i;k>j+1;k--)
+                array[k]=array[k-1];
+            array[++j]=key;
+        }
+        return;
+    }
 }

@@ -3,7 +3,7 @@ package offer;
 public class TestTree {
     public static void main(String[] args) {
         int[] arr={1,3,-1,7,5,-1,-1,6,-1,-1,-1};
-        TreeNode root= TreeNode.getTreeByLevelOrder(arr,-1);
+        TreeNode root= TreeNode.buildTreeByLevel(arr);
         BSTkNode test=new BSTkNode();
     }
     public static void preorder(TreeNode root){
