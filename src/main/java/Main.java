@@ -4,17 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner=new Scanner(System.in);
-        String line=scanner.nextLine();
-        scanner.close();
-        String[] fields=line.split(",");
-        int[] arr=new int[fields.length];
-        for(int i=0;i<arr.length;i++)
-            arr[i]=Integer.parseInt(fields[i]);
-        res=0;
-        f(arr,0,0,0,2,2);
-//        System.out.println(res);
-        System.out.println(b1+" "+s1+" "+b2+" "+s2);
+        System.out.println((int)'/');
     }
 
     static int res=0;

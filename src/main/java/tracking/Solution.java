@@ -1,8 +1,6 @@
 package tracking;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Solution {
     /**
@@ -176,5 +174,127 @@ public class Solution {
         return memo[i][j]==1;
     }
 
+    /***
+     * 37. Sudoku Solver
+     * 采用空间换时间的思路，申请9(row)+9(column)+9(sub-boxes)个Set
+     * @param board
+     */
+    public void solveSudoku(char[][] board) {
+        List<Set<Integer>> puted=new ArrayList<>();
+        for(int i=0;i<27;i++) puted.add(new HashSet<>());
+        for(int i=0;i<9;i++) {
+            for (int j = 0; j < 9; j++) {
+                if(board[i][j]!='.'){
+                    int num=board[i][j]-48;
+                    puted.get(j).add(num);
+                    puted.get(9+i).add(num);
+                    int pos = (i / 3) + (j / 3) * 3;
+                    puted.get(18+pos).add(num);
+                }
+            }
+        }
+        char[][] res=new char[board.length][board[0].length];
+        solveSudoku(board,0,0,puted,res);
+        for(int i=0;i<9;i++)
+            for(int j=0;j<9;j++)
+                board[i][j]=res[i][j];
+    }
 
+    private void solveSudoku(char[][] board, int x, int y, List<Set<Integer>> puted, char[][] res) {
+        //按照先右后下的顺序
+        if(x==9){
+            x=0;
+            y+=1;
+        }
+        //所有格子放置完成
+        if(y==9){
+            for(int i=0;i<9;i++)
+                for(int j=0;j<9;j++)
+                    res[i][j]=board[i][j];
+            return;
+        }
+        if(board[x][y]!='.')
+            solveSudoku(board,x+1,y,puted,res);
+        else{
+            //计算小方格位置
+            int pos = (x / 3) + (y / 3) * 3;
+            //尝试从1-9选择数字放入
+            int numToPut;
+            for(int num=1;num<=9;num++) {
+                //判断行
+                if (puted.get(y).contains(num))
+                    continue;
+                //判断列
+                if (puted.get(9 + x).contains(num))
+                    continue;
+                //判断小方格
+                if (puted.get(18 + pos).contains(num))
+                    continue;
+                numToPut=num;
+                //放入
+                board[x][y]= (char) (48+numToPut);
+                puted.get(y).add(numToPut);
+                puted.get(9+x).add(numToPut);
+                puted.get(18+pos).add(numToPut);
+                solveSudoku(board,x+1,y,puted,res);
+                //返回
+                board[x][y]= '.';
+                puted.get(y).remove(numToPut);
+                puted.get(9+x).remove(numToPut);
+                puted.get(18+pos).remove(numToPut);
+            }
+
+        }
+    }
+
+
+    /**
+     * 44. Wildcard Matching
+     * @param s
+     * @param p
+     * @return
+     */
+    public boolean isMatch44(String s,String p){
+        //预先处理连续p中连续的*
+        StringBuilder preHandledP=new StringBuilder();
+        for (int i=0;i<p.length();i++){
+            if(p.charAt(i)=='*'&&(i+1)<p.length()&&p.charAt(i+1)=='*') {
+                continue;
+            } else {
+                preHandledP.append(p.charAt(i));
+            }
+        }
+//        System.out.println(s+":"+preHandledP.toString());
+        return matchWild(s,preHandledP.toString());
+//        return false;
+    }
+
+
+    private boolean matchWild(String s, String p) {
+        //两个均匹配完时匹配成功
+        if(s.length()==0&&p.length()==0){
+            return true;
+        }
+        if(p.length()==0){
+            return false;
+        }
+        //如果p的首字符为*,选择继续匹配或结束匹配，如果s为空，则*只能结束匹配
+        if(p.charAt(0)=='*') {
+            if(s.length() == 0)
+                return matchWild(s, p.substring(1));
+            else{
+                return matchWild(s.substring(1),p)||matchWild(s,p.substring(1));
+            }
+        }
+        //s为空，匹配失败 （执行到这里则p当前字符不是*）
+        if(s.length()==0){
+            return false;
+        }
+        //此时只剩下普通字符匹配或问号
+        if(p.charAt(0)=='?'||p.charAt(0)==s.charAt(0)){
+            return  matchWild(s.substring(1),p.substring(1));
+        }else{
+            return  false;
+        }
+    }
 }

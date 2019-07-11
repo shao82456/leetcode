@@ -38,12 +38,12 @@ public class SolutionTest {
     }
 
     @Test
-<<<<<<< Updated upstream
     public void reOrderArray() {
-        int[] arr={0,1,2,3,4,5};
+        int[] arr = {0, 1, 2, 3, 4, 5};
         solution.reOrderArray(arr);
         System.out.println(Arrays.toString(arr));
-=======
+    }
+
     public void reverseList() {
         ListNode h=new ListNode(1);
         h.next=new ListNode(2);
@@ -54,6 +54,5 @@ public class SolutionTest {
             System.out.println(res.val);
             res=res.next;
         }
->>>>>>> Stashed changes
     }
 }

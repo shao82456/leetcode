@@ -2,6 +2,7 @@ package tracking;
 
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,5 +45,29 @@ public class SolutionTest {
         String input="aab";
         String p="c*a*b";
         System.out.println(sol.isMatchII(input,p));
+    }
+
+    @Test
+    public void solveSudoku() {
+        char[][] board={
+            {'5','3','.', '.','7','.',  '.','.','.'},
+            {'6','.','.', '1','9','5',  '.','.','.'},
+            {'.','9','8', '.','.','.',  '.','6','.'},
+            {'8','.','.', '.','6','.',  '.','.','3'},
+            {'4','.','.', '8','.','3',  '.','.','1'},
+            {'7','.','.', '.','2','.',  '.','.','6'},
+            {'.','6','.', '.','.','.',  '2','8','.'},
+            {'.','.','.', '4','1','9',  '.','.','5'},
+            {'.','.','.', '.','8','.',  '.','7','9'}
+        };
+        sol.solveSudoku(board);
+        System.out.println(Arrays.deepToString(board));
+    }
+
+    @Test
+    public void isMatch44() {
+        String s="babbbbaabababaabbababaababaabbaabababbaaababbababaaaaaabbabaaaabababbabbababbbaaaababbbabbbbbbbbbbaabbb";
+        String p="b**bb**a**bba*b**a*bbb**aba***babbb*aa****aabb*bbb***a";
+        System.out.println(sol.isMatch44(s,p));
     }
 }

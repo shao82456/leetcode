@@ -1,5 +1,6 @@
 package array;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -59,5 +60,14 @@ public class SolutionTest {
                 { 5, 6, 7,8 },
                 { 8, 9,10,11 }};
         System.out.println(sol.spiralOrder(map));
+    }
+
+    @Test
+    public void convert() {
+        String input1="PAYPALISHIRING";
+        String res1=sol.convert(input1,3);
+        String res2=sol.convert(input1,4);
+        assertEquals("PAHNAPLSIIGYIR",res1);
+        assertEquals("PINALSIGYAHRPI",res2);
     }
 }

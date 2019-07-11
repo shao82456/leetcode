@@ -6,6 +6,32 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Solution {
+
+    /**
+     *6. ZigZag Conversion
+     * 按zigzag顺序显示字符串时，需要记录横纵坐标信息，但是结果返回的是按行串起来的信息
+     * ，故不需要维护每个字符具体是哪一列的，只需要保证先后顺序即可
+     * 当对输入逐字符判断行信息时，将字符放入对应的行列表中即可，行列表内的元素顺序就是该行的元素的列顺序
+     */
+    public String convert(String s, int numRows) {
+        //准备行列表
+        List<List<Character>> rows=new ArrayList<>();
+        for(int i=0;i<numRows;i++)
+            rows.add(new ArrayList<>());
+        //放入对应行
+        int idx=0;
+        while (idx<s.length()){
+            for(int i=0;i<numRows&&idx<s.length();i++)
+                rows.get(i).add(s.charAt(idx++));
+            for(int i=numRows-2;i>=1&&idx<s.length();i--)
+                rows.get(i).add(s.charAt(idx++));
+        }
+        StringBuilder res=new StringBuilder();
+        for(int i=0;i<numRows;i++)
+            rows.get(i).forEach(character -> res.append(character));
+        return res.toString();
+    }
+
     /**
      * 5. Longest Palindromic Substring
      */
