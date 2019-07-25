@@ -70,4 +70,37 @@ public class SolutionTest {
         String p="b**bb**a**bba*b**a*bbb**aba***babbb*aa****aabb*bbb***a";
         System.out.println(sol.isMatch44(s,p));
     }
+
+    @Test
+    public void solveNQueens() {
+        int input=4;
+        List<List<String>> res=sol.solveNQueens(input);
+        for(List<String> solution:res){
+            System.out.println("solution");
+            for(String line:solution)
+                System.out.println(line);
+        }
+    }
+
+    @Test
+    public void jiecheng() {
+        int res=4;
+        char c= (char) (res+48);
+        System.out.println(c);
+    }
+
+    @Test
+    public void getPermutation() {
+        String res=sol.getPermutation(4,23);
+        System.out.println(res);
+    }
+
+    @Test
+    public void getUnknownNeighbor() {
+        int node=0;
+        for(int i=0;i<3;i++){
+            int neighbor=node^(1<<i);
+            System.out.println(Integer.toBinaryString(neighbor));
+        }
+    }
 }

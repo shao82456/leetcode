@@ -15,18 +15,21 @@ public class Sort1 {
     static class BubbleSort implements Sorter{
         @Override
         public void sort(int[] arr) {
-            if(arr==null||arr.length<2) return;
-
-            int lastpos=0;//lastpos表示最后一个无序的位置
-            //i表示要冒出来的元素的位置
-            for(int i= arr.length-1;i>0;i=lastpos){
-                lastpos=0;//每次默认数组已经有序
+            //边界检查
+            if(arr==null||arr.length<2)
+                return;
+            //最后一个要冒出到的位置
+            int lastPos=0;
+            //最后一个位置无需冒出，已经有序
+            for(int i=arr.length-1;i>0;i=lastPos){
+                //每轮冒泡前假设数组已经有序
+                lastPos=0;
                 for(int j=0;j<i;j++){
                     if(arr[j]>arr[j+1]){
-                        int tmp=arr[j];
+                        int temp=arr[j];
                         arr[j]=arr[j+1];
-                        arr[j+1]=tmp;
-                        lastpos=j;
+                        arr[j+1]=temp;
+                        lastPos=j;
                     }
                 }
             }
@@ -35,33 +38,38 @@ public class Sort1 {
     static class SelectSort implements Sorter{
         @Override
         public void sort(int[] arr) {
-            if(null==arr||arr.length<2)
-                return;
+            //边界检查
+            if(arr==null||arr.length<2) return;
+            //每轮选出最小的元素
             for(int i=0;i<arr.length-1;i++){
-                int min=arr[i];
-                int minpos=i;
+                int minVal=arr[i];
+                int minPos=i;
                 for(int j=i+1;j<arr.length;j++){
-                    if(arr[j]<min){
-                        min=arr[j];
-                        minpos=j;
+                    if(arr[j]<minVal){
+                        minVal=arr[j];
+                        minPos=j;
                     }
                 }
-                arr[minpos]=arr[i];
-                arr[i]=min;
+                arr[minPos]=arr[i];
+                arr[i]=minVal;
             }
         }
     }
-    static class InsertSort implements Sorter{
+
+    static class InsertSorter implements Sorter{
         @Override
         public void sort(int[] arr) {
-            if(null==arr||arr.length<2)
-                return;
+            //边界检查
+            if(arr==null||arr.length<2) return;
+            //初始时假设数组[0,1)有序，从元素1开始向左寻找插入位置
             for(int i=1;i<arr.length;i++){
-                int key=arr[i];
-                int j;
+                //要尝试插入的元素
+                int key=arr[i],j;
+                //寻找可插入的位置,并移动部门元素
                 for(j=i-1;j>=0&&key<arr[j];j--){
                     arr[j+1]=arr[j];
                 }
+                //此时j=-1或arr[j]<=key
                 arr[j+1]=key;
             }
         }
@@ -104,7 +112,10 @@ public class Sort1 {
         }
     }
     public static void main(String[] args) {
-        testSort(new BubbleSort());
+//        testSort(new InsertSorter());
+        int[] input=new int[]{1,4,2,5};
+        new InsertSorter().sort(input);
+        System.out.println(Arrays.toString(input));
     }
 
     static void testSort(Sorter sorter){

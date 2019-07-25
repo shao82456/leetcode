@@ -71,15 +71,7 @@ public class Solution {
         }
     }
 
-    /***
-     * 60. Permutation Sequence
-     */
 
-    public String getPermutation(int n, int k) {
-        List<String> res=permutation(n);
-        Collections.sort(res);
-        return res.get(k-1);
-    }
 
     public List<String> permutation(int n){
         char[] nums=new char[n];
@@ -297,4 +289,124 @@ public class Solution {
             return  false;
         }
     }
+
+    /**
+     * 51. N-Queens
+     */
+    List<List<String>> res51=new ArrayList<>();
+    public List<List<String>> solveNQueens(int n) {
+        boolean[][] located=new boolean[n][n];
+        res.clear();
+        if(n==0) return res51;
+
+        put(n,located,0);
+        return res51;
+    }
+    private void put(int n, boolean[][] located, int sti) {
+        if(sti==n) {
+            addOne(located);
+        }
+        // TODO Auto-generated method stub
+        for(int j=0;j<n;j++) {
+            if(availColumn(located,sti,j)&&availX(located,sti,j)) {
+                located[sti][j]=true;
+                put(n,located,sti+1);
+                located[sti][j]=false;
+            }
+        }
+    }
+    private void addOne(boolean[][] located) {
+        // TODO Auto-generated method stub
+        List<String> one=new ArrayList<>();
+        for(int i=0;i<located.length;i++) {
+            StringBuilder sb=new StringBuilder();
+            for(int j=0;j<located[0].length;j++)
+                if(located[i][j]) sb.append('Q');
+                else sb.append('.');
+            one.add(sb.toString());
+        }
+        res51.add(one);
+    }
+    private boolean availX(boolean[][] located, int sti, int j) {
+        // TODO Auto-generated method stub
+        int leftj=j-1;
+        for(int i=sti-1;i>=0;i--) {
+            if(leftj<0) break;
+            if(located[i][leftj--]) return false;
+        }
+
+        int rightj=j+1;
+        for(int i=sti-1;i>=0;i--) {
+            if(rightj>=located[0].length) break;
+            if(located[i][rightj++]) return false;
+        }
+        return true;
+    }
+    private boolean availColumn(boolean[][] located, int sti,int j) {
+        // TODO Auto-generated method stub
+        for(int i=0;i<sti;i++)
+            if(located[i][j]) return false;
+        return true;
+    }
+
+
+    /**
+     * 60. Permutation Sequence
+     * 求n个元素全排列的第k个排列，如1,2,3的第3个排列是213
+     * 关键在于分组
+     */
+    public String getPermutation(int n, int k) {
+        //准备
+        int[] jc=jiecheng(n);
+        List<Integer> items=new ArrayList<>();
+        for(int i=1;i<=n;i++) items.add(i);
+
+        //计算k在每个分组的序号，直到最后一轮分组长度为1
+        int tmpK=-1;//当前k值
+        int tmpL=-1;//分组长度
+        int tmpA=-1;//所在组的序号
+        char[] res=new char[n];//保存结果
+        //循环n-1次，选出n-1个数
+        for(int i=1;i<n;i++){
+            tmpK=i==1?k-1:tmpK-tmpL*tmpA;
+            tmpL=jc[n-i];
+            tmpA=tmpK/tmpL;
+            res[i-1]= (char) (items.remove(tmpA).intValue()+48);
+        }
+        //选最后一个数,此时items中也应该只剩一个数
+        res[n-1]= (char) (items.remove(0).intValue()+48);
+        return new String(res);
+    }
+
+    //给定n，返回arr,其中arr[i]表示(n-i)!
+    public int[] jiecheng(int n){
+        int[] res=new int[n+1];
+        res[1]=1;
+        for(int i=2;i<=n;i++)
+            res[i]=res[i-1]*i;
+        return res;
+    }
+
+    /**
+     * 89. Gray Code
+     * 每个数到视为一个节点，则每个点有n个路径，2^n个节点组成一个图
+     * dfs搜索出一条路径即可
+     */
+    public List<Integer> grayCode(int n) {
+        Set<Integer>
+        return null;
+    }
+
+    public int getUnknownNeighbor(int node,int n,Set<Integer> knownNeighbors){
+        //第i位不同
+        for(int i=0;i<n;i++){
+            int neighbor=node^(1<<i);
+            if(!knownNeighbors.contains(neighbor))
+                return node;
+        }
+        return -1;
+    }
+
+
+
 }

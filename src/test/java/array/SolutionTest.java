@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -69,5 +70,20 @@ public class SolutionTest {
         String res2=sol.convert(input1,4);
         assertEquals("PAHNAPLSIIGYIR",res1);
         assertEquals("PINALSIGYAHRPI",res2);
+    }
+
+    @Test
+    public void twoSum() {
+        int[] arr={2, 7, 11, 15};
+        int target=9;
+        int[] res=sol.twoSum(arr,target);
+        System.out.println(Arrays.toString(res));
+    }
+
+    @Test
+    public void addTwoNumbers() {
+        ListNode l1=ListNode.mkList(new int[]{1});
+        ListNode l2=ListNode.mkList(new int[]{5,6,4});
+        assertEquals("6->6->4",sol.addTwoNumbers(l1,l2).toString());
     }
 }

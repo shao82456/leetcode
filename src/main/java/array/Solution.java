@@ -1,11 +1,84 @@
 package array;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int x) { val = x; }
+
+    public static ListNode mkList(int[] arr){
+        if(arr.length==0) return null;
+        ListNode dh=new ListNode(-1);
+        ListNode cur=dh;
+        for(int num:arr){
+            cur.next=new ListNode(num);
+            cur=cur.next;
+        }
+        return dh.next;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb=new StringBuilder();
+        int val=this.val;
+        ListNode next=this.next;
+        while(next!=null) {
+            sb.append(val + "->");
+            val =next.val;
+            next=next.next;
+        }
+        sb.append(val);
+        return sb.toString();
+    }
+}
 
 public class Solution {
+
+    /**
+     *1. Two Sum
+     *给定一个数组和目标数，找出两个和为目标数的数的index
+     * 普通方法两层for循环，O(n^2)
+     * 使用hash快速查找，从i=0开始，先在集合中查找另一半（这样避免用了两次自己，如4+4=8),如果没有，则加入集合，当遍历到这个数的另一半时，就找到了一对
+     * 此题假定这个组只有一对数符合条件，如果不止一对要找出所有解，依然可以用此方法，因为对一个数，最多只存在一个另一半的数
+     */
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer,Integer> data=new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            if(data.containsKey((target-nums[i]))){
+                int j=data.get(target-nums[i]);
+                return i<j?new int[] {i,j}:new int[]{j,i};
+            }else{
+                data.put(nums[i],i);
+            }
+        }
+        return null;
+    }
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dh=new ListNode(-1);
+        ListNode cur=dh;
+        int whelm=0;
+        for(ListNode p1=l1,p2=l2;p1!=null||p2!=null;){
+            int sum=whelm;
+
+            if(p1!=null) {
+                sum+=p1.val;
+                p1=p1.next;
+            }
+            if(p2!=null) {
+                sum+=p2.val;
+                p2=p2.next;
+            }
+            whelm=sum/10;
+            sum=sum%10;
+
+            cur.next=new ListNode(sum);
+            cur=cur.next;
+        }
+        if(whelm!=0) cur.next=new ListNode(whelm);
+        return dh.next;
+    }
 
     /**
      *6. ZigZag Conversion
