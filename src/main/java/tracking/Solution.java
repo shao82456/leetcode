@@ -1,5 +1,6 @@
 package tracking;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Solution {
@@ -393,8 +394,17 @@ public class Solution {
      * dfs搜索出一条路径即可
      */
     public List<Integer> grayCode(int n) {
-        Set<Integer>
-        return null;
+        Set<Integer> knownNeighbors=new HashSet<>();
+        List<Integer> res=new ArrayList<>();
+        knownNeighbors.add(0);
+        res.add(0);
+        int curNode=0;
+        while ((curNode=getUnknownNeighbor(curNode,n,knownNeighbors))!=-1){
+            System.out.println(curNode);
+            knownNeighbors.add(curNode);
+            res.add(curNode);
+        }
+        return res;
     }
 
     public int getUnknownNeighbor(int node,int n,Set<Integer> knownNeighbors){
@@ -402,11 +412,46 @@ public class Solution {
         for(int i=0;i<n;i++){
             int neighbor=node^(1<<i);
             if(!knownNeighbors.contains(neighbor))
-                return node;
+                return neighbor;
         }
         return -1;
     }
 
+    /**
+     * 90. Subsets II
+     * 求子集，额外记录每个元素的重复数目即可
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        HashMap<Integer,Integer> duplicatedTime=new HashMap<>();
+        for(int num:nums){
+            duplicatedTime.put(num,duplicatedTime.getOrDefault(num,0)+1);
+        }
+        List<Integer> items=new ArrayList(duplicatedTime.keySet());
+        List<List<Integer>> res=new ArrayList<>();
+        ArrayList<Integer> one=new ArrayList<>();
+        subsetsWithDup(0,items,duplicatedTime,one,res);
+        return res;
+    }
+
+    private void subsetsWithDup(int i, List<Integer> items, HashMap<Integer, Integer> duplicatedTime, ArrayList<Integer> one, List<List<Integer>> res) {
+        if(i==items.size()) {
+            res.add((List<Integer>) one.clone());
+            return;
+        }
+        int item=items.get(i);
+        //j表示选item选几次，j=0表示不选，最多选完所有重复的item
+        for(int j=0;j<=duplicatedTime.get(item);j++){
+            //添加item
+            for(int k=0;k<j;k++)
+                one.add(item);
+            subsetsWithDup(i+1,items,duplicatedTime,one,res);
+            //回溯
+            for(int k=0;k<j;k++)
+                one.remove(one.size()-1);
+        }
+    }
 
 
 }

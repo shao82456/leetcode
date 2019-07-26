@@ -103,4 +103,17 @@ public class SolutionTest {
             System.out.println(Integer.toBinaryString(neighbor));
         }
     }
+
+    @Test
+    public void grayCode() {
+        int n=0;
+        List<Integer> res=sol.grayCode(n);
+        System.out.println(res);
+    }
+
+    @Test
+    public void subsetsWithDup() {
+        List<List<Integer>> res=sol.subsetsWithDup(new int[]{});
+        System.out.println(res);
+    }
 }
