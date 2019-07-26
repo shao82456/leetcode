@@ -72,6 +72,7 @@ public class SolutionTest {
     }
 
     @Test
+<<<<<<< Updated upstream
     public void solveNQueens() {
         int input=4;
         List<List<String>> res=sol.solveNQueens(input);
@@ -114,6 +115,12 @@ public class SolutionTest {
     @Test
     public void subsetsWithDup() {
         List<List<Integer>> res=sol.subsetsWithDup(new int[]{});
+=======
+    public void combine() {
+        int n=4;
+        int k=2;
+        List<List<Integer>> res=sol.combine(n,k);
+>>>>>>> Stashed changes
         System.out.println(res);
     }
 }

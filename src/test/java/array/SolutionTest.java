@@ -35,6 +35,7 @@ public class SolutionTest {
     public void longestPalindrome() {
         String str="ac";
         String res=sol.longestPalindrome(str);
+
         System.out.println(res);
     }
 
