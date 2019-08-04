@@ -72,7 +72,6 @@ public class SolutionTest {
     }
 
     @Test
-<<<<<<< Updated upstream
     public void solveNQueens() {
         int input=4;
         List<List<String>> res=sol.solveNQueens(input);
@@ -114,13 +113,45 @@ public class SolutionTest {
 
     @Test
     public void subsetsWithDup() {
-        List<List<Integer>> res=sol.subsetsWithDup(new int[]{});
-=======
-    public void combine() {
-        int n=4;
-        int k=2;
-        List<List<Integer>> res=sol.combine(n,k);
->>>>>>> Stashed changes
+        List<List<Integer>> res = sol.subsetsWithDup(new int[]{});
         System.out.println(res);
+    }
+
+    @Test
+    public void combine() {
+        int n = 4;
+        int k = 2;
+        List<List<Integer>> res = sol.combine(n, k);
+        System.out.println(res);
+    }
+
+    public void isAdditiveNumber() {
+        String input1="101";
+        boolean res=sol.isAdditiveNumber(input1);
+        assertEquals(true,res);
+    }
+
+    @Test
+    public void isAdditiveStr() {
+        String num1="10";
+        String num2="10";
+        String str="20305080130210";
+        boolean res=sol.isAdditiveStr(num1,num2,str);
+        assertEquals(true,res);
+    }
+
+    @Test
+    public void addStr() {
+        String s1="0";
+        String s2="0";
+        assertEquals("0",sol.addStr(s1,s2));
+
+    }
+
+    @Test
+    public void countNumbersWithUniqueDigits() {
+        int input1=2;
+        assertEquals(8877691,sol.countNumbersWithUniqueDigits(input1));
+//        assertEquals(91,sol.countNumbersWithUniqueDigits(input1));
     }
 }

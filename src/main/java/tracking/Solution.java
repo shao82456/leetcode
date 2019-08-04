@@ -484,4 +484,103 @@ public class Solution {
         search(n, i + 1, k - 1, arr, res);
         arr.remove(arr.size() - 1);
     }
+
+    public boolean isAdditiveNumber(String num) {
+        int l = num.length();
+        int maxl = num.length() / 2;
+        for (int n1 = 1; n1 <= maxl; n1++) {
+            if (num.charAt(n1) == '0') {
+                if (isAdditiveStr(num.substring(0, n1), "0", num.substring(n1 + 1))) {
+                    return true;
+                }
+                continue;
+            }
+            for (int n2 = 1; n2 <= maxl && (n1 + n2) < l; n2++) {
+                if (num.charAt(n1 + n2) == '0') {
+                    if (num.equals("000"))
+                        return true;
+                    continue;
+                }
+                if (isAdditiveStr(num.substring(0, n1), num.substring(n1, n1 + n2), num.substring(n1 + n2))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isAdditiveStr(String num1, String num2, String str) {
+        String num3 = addStr(num1, num2);
+        while (str.startsWith(num3)) {
+            str = str.substring(num3.length());
+            if (str.length() == 0)
+                return true;
+            num1 = num2;
+            num2 = num3;
+            num3 = addStr(num1, num2);
+        }
+        return false;
+    }
+
+    public String addStr(String s1, String s2) {
+        char[] res = new char[Integer.max(s1.length(), s2.length()) + 1];
+        int extra = 0;
+        int p1 = s1.length() - 1;
+        int p2 = s2.length() - 1;
+        int i = res.length - 1;
+        while (p1 >= 0 || p2 >= 0) {
+            int a = p1 >= 0 ? s1.charAt(p1) - '0' : 0;
+            int b = p2 >= 0 ? s2.charAt(p2) - '0' : 0;
+            int c = (extra + a + b) % 10;
+            extra = (extra + a + b) / 10;
+            res[i] = (char) (c + 48);
+            i -= 1;
+            p1 -= 1;
+            p2 -= 1;
+        }
+        if (extra == 0)
+            return new String(res, 1, res.length - 1);
+        else {
+            res[0] = (char) (extra + 48);
+            return new String(res);
+        }
+    }
+
+
+    public int countNumbersWithUniqueDigits(int n) {
+        return count(0, n, 0);
+    }
+
+    private int count(int i, int n, int used) {
+        if (i == n) {
+            return 1;
+        }
+        int levelSum = 0;
+
+        for (int num = 0; num <= 9; num++) {
+            if(num==0&&used==0){
+                levelSum += count(i + 1, n, used);
+            } else if (!isUsed(num, used)) {
+                int tempUsed = use(num, used);
+                levelSum += count(i + 1, n, tempUsed);
+            }
+        }
+        return levelSum;
+    }
+
+    public boolean isUsed(int i, int used) {
+        if ((used & (1 << i)) == 0)
+            return false;
+        else
+            return true;
+    }
+
+    public int use(int i, int used) {
+        used = used | (1 << i);
+        return used;
+    }
+
+    public int unUse(int i, int used) {
+        return used & (~(1 << i));
+    }
 }
