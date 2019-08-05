@@ -522,6 +522,28 @@ public class Solution {
         return false;
     }
 
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> res = new ArrayList<>();
+        ArrayList<Integer> one = new ArrayList<>();
+        combinationSum3(1, k, n, res, one);
+        return res;
+    }
+
+    private void combinationSum3(int i, int k, int left, List<List<Integer>> res, ArrayList<Integer> one) {
+        if (k == 0) {
+            if (left == 0) res.add((List<Integer>) one.clone());
+            return;
+        }
+        if (i == 10) {
+            return;
+        } else {
+            one.add(i);
+            combinationSum3(i + 1, k-1, left-i, res, one);
+            one.remove(one.size() - 1);
+            combinationSum3(i + 1, k, left, res, one);
+        }
+    }
+
     public String addStr(String s1, String s2) {
         char[] res = new char[Integer.max(s1.length(), s2.length()) + 1];
         int extra = 0;
@@ -582,5 +604,18 @@ public class Solution {
 
     public int unUse(int i, int used) {
         return used & (~(1 << i));
+    }
+
+    public boolean judge(List<String> seq){
+        int a=Integer.valueOf(seq.get(0));
+        int b=Integer.valueOf(seq.get(1));
+        for(int i=2;i<seq.size();i++){
+            int c=Integer.valueOf(seq.get(i));
+            if((a+b)!=c)
+                return false;
+            a=b;
+            b=c;
+        }
+        return true;
     }
 }
