@@ -618,4 +618,99 @@ public class Solution {
         }
         return true;
     }
+
+    /**
+     * 401. Binary Watch
+     * 回溯寻找所有解，然后对每个解进行翻译
+     */
+    public List<String> readBinaryWatch(int num) {
+        List<String> res=new ArrayList<>();
+        List<Integer> one=new ArrayList<>();
+        readBinaryWatch(0,num,res,one);
+        return res;
+    }
+
+    public void readBinaryWatch(int i, int num, List<String> res, List<Integer> one) {
+        if(num==0) {
+            attempAdd(one,res);
+            return;
+        }
+        if(i==10)
+            return;
+        one.add(i);
+        readBinaryWatch(i+1,num-1,res,one);
+        one.remove(one.size()-1);
+        readBinaryWatch(i+1,num,res,one);
+    }
+
+    public void attempAdd(List<Integer> one,List<String> res) {
+        int h=0;
+        int m=0;
+        for(Integer num:one){
+            if(num<4)
+                h+=Math.pow(2,num);
+            else
+                m+=Math.pow(2,num-4);
+        }
+        if(h<12&&m<60){
+            String timeStr=h+":"+String.format("%02d",m);
+            res.add(timeStr);
+        }
+    }
+
+    /**
+     * 784. Letter Case Permutation
+     * @param S
+     * @return
+     */
+    public List<String> letterCasePermutation(String S) {
+        List<String> res=new ArrayList<>();
+        char[] cs=S.toCharArray();
+        letterCasePermutation(0,cs,res);
+        return res;
+    }
+
+    private void letterCasePermutation(int i, char[] cs, List<String> res) {
+        if(i==cs.length){
+            res.add(new String(cs));
+            return;
+        }
+        if(Character.isDigit(cs[i])){
+            letterCasePermutation(i+1,cs,res);
+            return;
+        }
+        char origin=cs[i];
+        cs[i]=Character.toLowerCase(origin);
+        letterCasePermutation(i+1,cs,res);
+        cs[i]=Character.toUpperCase(origin);
+        letterCasePermutation(i+1,cs,res);
+    }
+
+    public int countArrangement(int N) {
+        List<Integer> one=new ArrayList<>();
+        int res=countArrangement(1,N,0,one);
+        return res;
+    }
+
+    private int countArrangement(int i, int n,int numUsed,List<Integer> one) {
+        if(i==n+1){
+            System.out.println(one);
+            return 1;
+        }
+        int total=0;
+        for(int j=1;j<=n;j++){
+            if(!isUsed(j,numUsed)&&canUse(i,j)){
+                int numUsed1=use(j,numUsed);
+                one.add(j);
+                total+=countArrangement(i+1,n,numUsed1,one);
+                one.remove(one.size()-1);
+            }
+        }
+        return total;
+    }
+
+    public boolean canUse(int i, int j) {
+        return i%j==0||j%i==0;
+    }
+
 }

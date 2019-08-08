@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -164,5 +165,43 @@ public class SolutionTest {
         int input=3;
         int res=sol.countNumbersWithUniqueDigits(input);
         assertEquals(739,res);
+    }
+
+    @Test
+    public void readBinaryWatch() {
+    }
+
+    @Test
+    public void readWatch() {
+        List<String> res=sol.readBinaryWatch(2);
+        Collections.sort(res);
+        System.out.println(res);
+    }
+
+    @Test
+    public void letterCasePermutation() {
+        String input1="";
+        String input2="a";
+        String input3="Ab12c";
+        assertEquals(Arrays.asList(""),sol.letterCasePermutation(input1));
+        assertEquals(Arrays.asList("a","A"),sol.letterCasePermutation(input2));
+        List<String> expectRes3=Arrays.asList("Ab12c","ab12c","AB12c","AB12C","aB12c","aB12C","Ab12C","ab12C");
+        List<String> res3=sol.letterCasePermutation(input3);
+        Collections.sort(expectRes3);
+        Collections.sort(res3);
+
+        assertEquals(expectRes3,res3);
+    }
+
+    @Test
+    public void countArrangement() {
+        int intpu1=2;
+        assertEquals(2,sol.countArrangement(intpu1));
+    }
+
+    @Test
+    public void canUse() {
+        System.out.println(sol.canUse(2,1));
+        System.out.println(sol.canUse(1,2));
     }
 }
