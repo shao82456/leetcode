@@ -741,9 +741,9 @@ public class Solution {
     }
 
     public List<Integer> isFibonacci(String s1, String s2, String left) {
-        if(s1.length()==10&&s1.compareTo("2147483647")>=0)
+        if (s1.length() == 10 && s1.compareTo("2147483647") >= 0)
             return null;
-        if(s2.length()==10&&s2.compareTo("2147483647")>=0)
+        if (s2.length() == 10 && s2.compareTo("2147483647") >= 0)
             return null;
         List<Integer> res = new ArrayList<>();
         int a = Integer.valueOf(s1);
@@ -753,7 +753,7 @@ public class Solution {
         long sum = a + b;
         String sumStr = Long.toString(sum);
         while (left.startsWith(sumStr)) {
-            if(sum>0x7fffffff)
+            if (sum > 0x7fffffff)
                 return null;
             a = b;
             b = (int) sum;
@@ -767,5 +767,35 @@ public class Solution {
         } else {
             return null;
         }
+    }
+
+    public int numTilePossibilities(String tiles) {
+        int[] times=new int[26];
+        for(char c:tiles.toCharArray()){
+            times[c-65]+=1;
+        }
+        int res=0;
+        for(int j=1;j<=tiles.length();j++){
+            res+=numTilePossibilities(j,times);
+        }
+        return res;
+    }
+
+    //从times表示的字母序列计算出可以组成长度为j的序列的个数
+    public int numTilePossibilities(int j,int[] times) {
+        return numTilePossibilities(0,j,times);
+    }
+
+    private int numTilePossibilities(int i, int j, int[] times) {
+        if(i==j) return 1;
+        int total=0;
+        for(int alpha=0;alpha<26;alpha++){
+            if(times[alpha]>0){
+                times[alpha]-=1;
+                total+=numTilePossibilities(i+1,j,times);
+                times[alpha]+=1;
+            }
+        }
+        return total;
     }
 }

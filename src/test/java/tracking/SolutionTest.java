@@ -215,7 +215,20 @@ public class SolutionTest {
 
     @Test
     public void splitIntoFibonacci() {
-        String input1="214748364721474836422147483641";
+        String input1 = "214748364721474836422147483641";
         System.out.println(sol.splitIntoFibonacci(input1));
+    }
+
+    public void numTilePossibilities() {
+        String input1="AAB";
+        System.out.println(sol.numTilePossibilities(input1));
+    }
+
+    @Test
+    public void numTilePossibilities1() {
+        int[] times=new int[26];
+        times[0]=2;
+        times[1]=1;
+        System.out.println(sol.numTilePossibilities(1,times));
     }
 }
