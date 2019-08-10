@@ -489,6 +489,7 @@ public class Solution {
         int l = num.length();
         int maxl = num.length() / 2;
         for (int n1 = 1; n1 <= maxl; n1++) {
+            //如果选的一个数的后一位是0，由于不能有前导0，只尝试第二个数字为0的情况
             if (num.charAt(n1) == '0') {
                 if (isAdditiveStr(num.substring(0, n1), "0", num.substring(n1 + 1))) {
                     return true;
@@ -496,6 +497,7 @@ public class Solution {
                 continue;
             }
             for (int n2 = 1; n2 <= maxl && (n1 + n2) < l; n2++) {
+                //如果第二个数字后面是0，由于不能有前导0，故只可能是0+0=0,输入只能为"000"
                 if (num.charAt(n1 + n2) == '0') {
                     if (num.equals("000"))
                         return true;
@@ -538,7 +540,7 @@ public class Solution {
             return;
         } else {
             one.add(i);
-            combinationSum3(i + 1, k-1, left-i, res, one);
+            combinationSum3(i + 1, k - 1, left - i, res, one);
             one.remove(one.size() - 1);
             combinationSum3(i + 1, k, left, res, one);
         }
@@ -580,7 +582,7 @@ public class Solution {
         int levelSum = 0;
 
         for (int num = 0; num <= 9; num++) {
-            if(num==0&&used==0){
+            if (num == 0 && used == 0) {
                 levelSum += count(i + 1, n, used);
             } else if (!isUsed(num, used)) {
                 int tempUsed = use(num, used);
@@ -606,15 +608,15 @@ public class Solution {
         return used & (~(1 << i));
     }
 
-    public boolean judge(List<String> seq){
-        int a=Integer.valueOf(seq.get(0));
-        int b=Integer.valueOf(seq.get(1));
-        for(int i=2;i<seq.size();i++){
-            int c=Integer.valueOf(seq.get(i));
-            if((a+b)!=c)
+    public boolean judge(List<String> seq) {
+        int a = Integer.valueOf(seq.get(0));
+        int b = Integer.valueOf(seq.get(1));
+        for (int i = 2; i < seq.size(); i++) {
+            int c = Integer.valueOf(seq.get(i));
+            if ((a + b) != c)
                 return false;
-            a=b;
-            b=c;
+            a = b;
+            b = c;
         }
         return true;
     }
@@ -624,93 +626,146 @@ public class Solution {
      * 回溯寻找所有解，然后对每个解进行翻译
      */
     public List<String> readBinaryWatch(int num) {
-        List<String> res=new ArrayList<>();
-        List<Integer> one=new ArrayList<>();
-        readBinaryWatch(0,num,res,one);
+        List<String> res = new ArrayList<>();
+        List<Integer> one = new ArrayList<>();
+        readBinaryWatch(0, num, res, one);
         return res;
     }
 
     public void readBinaryWatch(int i, int num, List<String> res, List<Integer> one) {
-        if(num==0) {
-            attempAdd(one,res);
+        if (num == 0) {
+            attempAdd(one, res);
             return;
         }
-        if(i==10)
+        if (i == 10)
             return;
         one.add(i);
-        readBinaryWatch(i+1,num-1,res,one);
-        one.remove(one.size()-1);
-        readBinaryWatch(i+1,num,res,one);
+        readBinaryWatch(i + 1, num - 1, res, one);
+        one.remove(one.size() - 1);
+        readBinaryWatch(i + 1, num, res, one);
     }
 
-    public void attempAdd(List<Integer> one,List<String> res) {
-        int h=0;
-        int m=0;
-        for(Integer num:one){
-            if(num<4)
-                h+=Math.pow(2,num);
+    public void attempAdd(List<Integer> one, List<String> res) {
+        int h = 0;
+        int m = 0;
+        for (Integer num : one) {
+            if (num < 4)
+                h += Math.pow(2, num);
             else
-                m+=Math.pow(2,num-4);
+                m += Math.pow(2, num - 4);
         }
-        if(h<12&&m<60){
-            String timeStr=h+":"+String.format("%02d",m);
+        if (h < 12 && m < 60) {
+            String timeStr = h + ":" + String.format("%02d", m);
             res.add(timeStr);
         }
     }
 
     /**
      * 784. Letter Case Permutation
+     *
      * @param S
      * @return
      */
     public List<String> letterCasePermutation(String S) {
-        List<String> res=new ArrayList<>();
-        char[] cs=S.toCharArray();
-        letterCasePermutation(0,cs,res);
+        List<String> res = new ArrayList<>();
+        char[] cs = S.toCharArray();
+        letterCasePermutation(0, cs, res);
         return res;
     }
 
     private void letterCasePermutation(int i, char[] cs, List<String> res) {
-        if(i==cs.length){
+        if (i == cs.length) {
             res.add(new String(cs));
             return;
         }
-        if(Character.isDigit(cs[i])){
-            letterCasePermutation(i+1,cs,res);
+        if (Character.isDigit(cs[i])) {
+            letterCasePermutation(i + 1, cs, res);
             return;
         }
-        char origin=cs[i];
-        cs[i]=Character.toLowerCase(origin);
-        letterCasePermutation(i+1,cs,res);
-        cs[i]=Character.toUpperCase(origin);
-        letterCasePermutation(i+1,cs,res);
+        char origin = cs[i];
+        cs[i] = Character.toLowerCase(origin);
+        letterCasePermutation(i + 1, cs, res);
+        cs[i] = Character.toUpperCase(origin);
+        letterCasePermutation(i + 1, cs, res);
     }
 
     public int countArrangement(int N) {
-        List<Integer> one=new ArrayList<>();
-        int res=countArrangement(1,N,0,one);
+        List<Integer> one = new ArrayList<>();
+        int res = countArrangement(1, N, 0, one);
         return res;
     }
 
-    private int countArrangement(int i, int n,int numUsed,List<Integer> one) {
-        if(i==n+1){
+    private int countArrangement(int i, int n, int numUsed, List<Integer> one) {
+        if (i == n + 1) {
             System.out.println(one);
             return 1;
         }
-        int total=0;
-        for(int j=1;j<=n;j++){
-            if(!isUsed(j,numUsed)&&canUse(i,j)){
-                int numUsed1=use(j,numUsed);
+        int total = 0;
+        for (int j = 1; j <= n; j++) {
+            if (!isUsed(j, numUsed) && canUse(i, j)) {
+                int numUsed1 = use(j, numUsed);
                 one.add(j);
-                total+=countArrangement(i+1,n,numUsed1,one);
-                one.remove(one.size()-1);
+                total += countArrangement(i + 1, n, numUsed1, one);
+                one.remove(one.size() - 1);
             }
         }
         return total;
     }
 
     public boolean canUse(int i, int j) {
-        return i%j==0||j%i==0;
+        return i % j == 0 || j % i == 0;
     }
 
+    public List<Integer> splitIntoFibonacci(String S) {
+        int maxl = Integer.min(S.length() / 2,10);
+        String s1, s2;
+        List<Integer> one;
+        for (int n1 = 1; n1 <= maxl; n1++) {
+            s1 = S.substring(0, n1);
+            if (S.charAt(n1) == '0') {
+                if ((one = isFibonacci(s1, "0", S.substring(n1 + 1))) != null)
+                    return one;
+            } else {
+                for (int n2 = 1; n2 <= maxl&&(S.length()-n1-n2)>=Integer.max(n1,n2); n2++) {
+                    if (S.charAt(n1 + n2) == '0' && S.equals("000"))
+                        return Arrays.asList(0, 0, 0);
+                    else {
+                        s2 = S.substring(n1, n1 + n2);
+                        if ((one = isFibonacci(s1, s2, S.substring(n1 + n2))) != null)
+                            return one;
+                    }
+                }
+            }
+        }
+        return new ArrayList<>();
+    }
+
+    public List<Integer> isFibonacci(String s1, String s2, String left) {
+        if(s1.length()==10&&s1.compareTo("2147483647")>=0)
+            return null;
+        if(s2.length()==10&&s2.compareTo("2147483647")>=0)
+            return null;
+        List<Integer> res = new ArrayList<>();
+        int a = Integer.valueOf(s1);
+        int b = Integer.valueOf(s2);
+        res.add(a);
+        res.add(b);
+        long sum = a + b;
+        String sumStr = Long.toString(sum);
+        while (left.startsWith(sumStr)) {
+            if(sum>0x7fffffff)
+                return null;
+            a = b;
+            b = (int) sum;
+            left = left.substring(sumStr.length());
+            res.add((int) sum);
+            sum = a + b;
+            sumStr = Long.toString(sum);
+        }
+        if (left.length() == 0) {
+            return res;
+        } else {
+            return null;
+        }
+    }
 }

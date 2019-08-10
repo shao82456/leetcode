@@ -204,4 +204,18 @@ public class SolutionTest {
         System.out.println(sol.canUse(2,1));
         System.out.println(sol.canUse(1,2));
     }
+
+    @Test
+    public void isFibonacci() {
+        String s1="110";
+        String s2="1";
+        String left="111";
+        System.out.println(sol.isFibonacci(s1,s2,left));
+    }
+
+    @Test
+    public void splitIntoFibonacci() {
+        String input1="214748364721474836422147483641";
+        System.out.println(sol.splitIntoFibonacci(input1));
+    }
 }
