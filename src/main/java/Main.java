@@ -15,21 +15,35 @@ public class Main {
             System.out.println(scanner.nextLine());
     }
 
-    static int res = 0;
-    static int b1 = 0, b2 = 0, s1 = 0, s2 = 0;
+    public int getSum(int a, int b) {
+        int extra=0;
+        while((extra=(a&b))!=0){
+            a=a^b;
+            b=extra<<1;
+        }
+        return a^b;
+    }
 
-    public static void f(int[] arr, int i, int curM, int curS, int bt, int st) {
-        if (i == arr.length || bt == 0 || st == 0)
-            res = Integer.max(res, curM);
-        if (bt > 0) {
-            f(arr, i + 1, curM - arr[i], curS + 1, bt - 1, st);
-            if (bt == 2) b1 = i + 1;
-            else b2 = i + 1;
-        }
-        if (st > 0 && curS > 0) {
-            f(arr, i + 1, curM + arr[i], curS - 1, bt, st - 1);
-            if (st == 2) s1 = i + 1;
-            else s2 = i + 2;
-        }
+    /**
+     * 按位取反，末尾+1是个可逆过程，补码中，正数=>负数，负数=>正数
+     * -2147483647的-还是自己
+     * @param n
+     * @return
+     */
+    public boolean isPowerOfTwo(int n) {
+        System.out.println(Integer.toBinaryString(n));
+        return (n&(-n))==n;
+    }
+
+    /**
+     * 342. Power of Four 先判断是否是2的power，再判断为1的位是否落入偶数位
+     * @param num
+     * @return
+     */
+    public boolean isPowerOfFour(int num) {
+        if(num==0) return false;
+        if((num&(-num))!=num) return false;
+        if((num&0x55555555)==0) return false;
+        return true;
     }
 }
