@@ -22,4 +22,10 @@ public class SolutionTest {
         TreeNode root1=buildByPre(new int[]{5,4,1,-1,-1,1,-1,-1,5,-1,5,-1,-1});
         System.out.println(sol.longestUnivaluePath(root1));
     }
+
+    @Test
+    public void minDiffInBST() {
+        TreeNode root=buildByPre(new int[]{8,2,1,-1,-1,4,-1,-1,9,-1,11,-1,-1});
+        System.out.println(sol.minDiffInBST(root));
+    }
 }

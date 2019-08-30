@@ -1,12 +1,21 @@
 package list;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class ListNode {
      int val;
      ListNode next;
      ListNode(int x) { val = x; }
- }
+
+    @Override
+    public String toString() {
+        return "ListNode{" +
+                "val=" + val +
+                ", next=" + next +
+                '}';
+    }
+}
 
 public class Solution {
 
@@ -159,4 +168,77 @@ public class Solution {
         return null;
     }
 
+    /**
+     * 445. Add Two Numbers II
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ArrayList<ListNode> stk1=new ArrayList<>();
+        while (l1!=null){
+            stk1.add(l1);
+            l1=l1.next;
+        }
+        ArrayList<ListNode> stk2=new ArrayList<>();
+        while (l2!=null){
+            stk2.add(l2);
+            l2=l2.next;
+        }
+        int extra=0;
+        ListNode last=null;
+        while(!stk1.isEmpty()||!stk2.isEmpty()){
+            int sum=extra;
+            if(!stk1.isEmpty()){
+                sum+=stk1.remove(stk1.size()-1).val;
+            }
+            if(!stk2.isEmpty()){
+                sum+=stk2.remove(stk2.size()-1).val;
+            }
+            extra=sum/10;
+            ListNode node=new ListNode(sum%10);
+            node.next=last;
+            last=node;
+        }
+        if(extra!=0) {
+            ListNode node=new ListNode(extra);
+            node.next=last;
+            last=node;
+        }
+        return last;
+    }
+
+    /**
+     * 725. Split Linked List in Parts
+     * @param root
+     * @param k
+     * @return
+     */
+    public ListNode[] splitListToParts(ListNode root, int k) {
+        ListNode[] heads=new ListNode[k];
+        int total=0;
+        ListNode cur=root;
+        while(cur!=null){
+            total+=1;
+            cur=cur.next;
+        }
+        int extra=total%k;
+        int nodes=total/k;
+        cur=root;
+        ListNode last=null;
+        for(int j=0;j<k;j++){
+            heads[j]=cur;
+            for(int t=0;t<nodes;t++) {
+                last=cur;
+                cur = cur.next;
+            }
+            if(extra!=0){
+                last=cur;
+                cur=cur.next;
+                extra-=1;
+            }
+            if(last!=null) last.next=null;
+        }
+        return heads;
+    }
 }

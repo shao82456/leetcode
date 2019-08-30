@@ -2,9 +2,7 @@ package dp;
 
 import offer.TreeNode;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 public class Solution {
     /***
@@ -506,5 +504,48 @@ public class Solution {
     /**
      * 263. Ugly Number
      */
+
+
+    /**
+     * 698. Partition to K Equal Sum Subsets
+     * @param nums
+     * @param k
+     * @return
+     */
+    public boolean canPartitionKSubsets(int[] nums, int k) {
+        int sum=0;
+        for(int num:nums){
+            sum+=num;
+        }
+        if(sum%k!=0) {
+            return false;
+        }
+        int[] subsum=new int[k];
+        boolean res=canPartitionKSubsets(0,nums,subsum,sum/k);
+        return res;
+    }
+
+    private boolean canPartitionKSubsets(int i, int[] nums, int[] subsum,int subtarget) {
+        if(i==nums.length){
+            for(int j=0;j<subsum.length;j++){
+                if(subsum[j]!=subtarget){
+                    return false;
+                }
+            }
+            return true;
+        }else{
+            for(int j=0;j<subsum.length;j++){
+                if(subsum[j]+nums[i]<=subtarget){
+                    subsum[j]+=nums[i];
+                    if(canPartitionKSubsets(i+1,nums,subsum,subtarget)){
+                        return true;
+                    }else{
+                        subsum[j]-=nums[i];
+                    }
+                }
+            }
+            return false;
+        }
+    }
 }
 

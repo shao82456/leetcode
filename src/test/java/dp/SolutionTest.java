@@ -78,4 +78,11 @@ public class SolutionTest {
         int res=solution.mincostTickets2(days,costs);
         System.out.println(res);
     }
+
+    @Test
+    public void canPartitionKSubsets() {
+        int[] nums=new int[]{5,2,5,5,5,5,5,5,5,5,5,5,5,5,5,3};
+        int k=4;
+        System.out.println(solution.canPartitionKSubsets(nums, k));
+    }
 }
