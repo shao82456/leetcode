@@ -1,5 +1,8 @@
 package list;
 
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -241,4 +244,52 @@ public class Solution {
         }
         return heads;
     }
+
+    /**
+     *430. Flatten a Multilevel Doubly Linked List
+     * @param head
+     * @return
+     */
+    public Node flatten(Node head) {
+        if(head==null) return null;
+        flatten1(head);
+        return head;
+    }
+
+    /*将链表head转换为双链表，返回最后一个转换成的双链表的最后一个节点*/
+    public Node flatten1(@NotNull Node head) {
+        if (head.child != null) {
+            Node child=head.child;
+            head.child=null;
+
+            Node next=head.next;
+            head.next=child;
+            child.prev=head;
+            Node childLast=flatten1(child);
+
+            childLast.next=next;
+            if(next!=null)
+                next.prev=childLast;
+
+            return childLast.next==null?childLast:flatten1(childLast.next)k;
+        }else if(head.next!=null){
+            return flatten1(head.next);
+        }else
+            return head;
+    }
 }
+class Node {
+    public int val;
+    public Node prev;
+    public Node next;
+    public Node child;
+
+    public Node() {}
+
+    public Node(int _val,Node _prev,Node _next,Node _child) {
+        val = _val;
+        prev = _prev;
+        next = _next;
+        child = _child;
+    }
+};

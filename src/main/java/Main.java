@@ -6,22 +6,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
-        File[] files = new File(".").listFiles();
-        for (File file : files) {
-            System.out.println(file);
-        }
-        Scanner scanner = new Scanner(ClassLoader.getSystemResourceAsStream("1.txt"));
-        while (scanner.hasNextLine())
-            System.out.println(scanner.nextLine());
-    }
-
-    public int getSum(int a, int b) {
-        int extra=0;
-        while((extra=(a&b))!=0){
-            a=a^b;
-            b=extra<<1;
-        }
-        return a^b;
+        System.out.println("jh");
     }
 
     /**

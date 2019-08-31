@@ -87,4 +87,10 @@ public class SolutionTest {
         ListNode l2=ListNode.mkList(new int[]{5,6,4});
         assertEquals("6->6->4",sol.addTwoNumbers(l1,l2).toString());
     }
+
+    @Test
+    public void countOfAtoms() {
+        String formula = "K4(ON(SO3)2)2";
+        System.out.println(sol.countOfAtoms(formula));
+    }
 }

@@ -43,4 +43,56 @@ public class SolutionTest {
             System.out.println(node);
         }
     }
+
+    @Test
+    public void flatten1() {
+        Node head1=new Node(1,null,null,null);
+        Node last=head1;
+        for(int i=2;i<=6;i++){
+            last.next=new Node(i,last,null,null);
+            last=last.next;
+        }
+        Node head2=new Node(7,null,null,null);
+        last=head2;
+        for(int i=8;i<=10;i++){
+            last.next=new Node(i,last,null,null);
+            last=last.next;
+        }
+        Node head3=new Node(11,null,null,null);
+        last=head3;
+        for(int i=12;i<=12;i++){
+            last.next=new Node(i,last,null,null);
+            last=last.next;
+        }
+        head1.next.next.child=head2;
+        head2.next.child=head3;
+
+        solution.flatten1(head1);
+        while(head1!=null){
+            if(head1.prev==null)
+                System.out.print("null->");
+            else
+                System.out.print(head1.prev.val+"->");
+            System.out.println(head1.val);
+            head1=head1.next;
+        }
+    }
+
+    @Test
+    public void flatten2(){
+        Node head1=new Node(1,null,null,null);
+
+        Node head2=new Node(7,null,null,null);
+
+        Node head3=new Node(11,null,null,null);
+        head1.child=head2;
+        head2.child=head3;
+
+        solution.flatten1(head1);
+        while(head1!=null){
+            System.out.println(head1.val);
+            head1=head1.next;
+        }
+    }
+
 }
