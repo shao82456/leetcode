@@ -95,4 +95,11 @@ public class SolutionTest {
         }
     }
 
+    @Test
+    public void removeZeroSumSublists() {
+        int[] arr=new int[]{3,0,-3,-3};
+        ListNode head=makeFromArr(arr);
+        ListNode res=solution.removeZeroSumSublists(head);
+        System.out.println(makeString(res));
+    }
 }
