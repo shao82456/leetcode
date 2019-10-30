@@ -358,4 +358,43 @@ public class Solution {
         }
         return j;
     }
+
+    /*42. Trapping Rain Water,暴力搜索*/
+    public int trap(int[] height) {
+        int res=0;
+        for(int i=0;i<height.length;i++){
+            int max_left=0;
+            int max_right=0;
+            for(int j=0;j<i;j++){
+                max_left=Math.max(height[j],max_left);
+            }
+            for(int j=i+1;j<height.length;j++){
+                max_right=Math.max(height[j],max_right);
+            }
+            res+=Math.max(Math.min(max_left,max_right)-height[i],0);
+        }
+        return res;
+    }
+
+    /*42. Trapping Rain Water,动态规划避免第二层循环*/
+    public int trap1(int[] height) {
+        int res=0;
+        /*max_left[i]表示i最高的左墙,即max(height[0,i-1])*/
+        int[] max_left=new int[height.length];
+        if(max_left.length>0)
+            max_left[0]=0;
+        for(int j=1;j<max_left.length;j++){
+            max_left[j]=Math.max(height[j-1],max_left[j-1]);
+        }
+        int[] max_right=new int[height.length];
+        if(max_right.length>0)
+            max_right[max_right.length-1]=0;
+        for(int j=max_right.length-2;j>=0;j--){
+            max_right[j]=Math.max(height[j+1],max_right[j+1]);
+        }
+        for(int i=0;i<height.length;i++){
+            res+=Math.max(Math.min(max_left[i],max_right[i])-height[i],0);
+        }
+        return res;
+    }
 }

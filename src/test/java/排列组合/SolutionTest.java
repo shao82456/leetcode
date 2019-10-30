@@ -1,4 +1,4 @@
-package plzh;
+package 排列组合;
 
 import org.junit.Test;
 

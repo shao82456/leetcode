@@ -93,4 +93,11 @@ public class SolutionTest {
         String formula = "K4(ON(SO3)2)2";
         System.out.println(sol.countOfAtoms(formula));
     }
+
+    @Test
+    public void trap() {
+        int[] input=new int[]{};
+        int res=sol.trap1(input);
+        System.out.println(res);
+    }
 }

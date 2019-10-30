@@ -1,42 +1,21 @@
-
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
-        System.out.println("jh");
-        ArrayList<Integer> arr = new ArrayList<>();
-        arr.add(1);
-        arr.add(2);
-        arr.add(3);
-        for (int i = 0; i < arr.size(); i++) {
-            System.out.println(arr.get(i));
-            arr.remove(i);
+    public static void main(String[] args) {
+        Scanner scanner=new Scanner(System.in);
+        int t=scanner.nextInt();
+        for(int z=0;z<t;z++){
+            int a=scanner.nextInt();
+            int b=scanner.nextInt();
+            int c=scanner.nextInt();
+            int d=scanner.nextInt();
+            int e=scanner.nextInt();
+            int black=a%c==0?a/c:(a/c)+1;
+            int red=b%d==0?b/d:(b/d)+1;
+            if(black+red<=e){
+                System.out.println(black+" "+red);
+            }else
+                System.out.println("-1");
         }
-    }
-
-    /**
-     * 按位取反，末尾+1是个可逆过程，补码中，正数=>负数，负数=>正数
-     * -2147483647的-还是自己
-     *
-     * @param n
-     * @return
-     */
-    public boolean isPowerOfTwo(int n) {
-        System.out.println(Integer.toBinaryString(n));
-        return (n & (-n)) == n;
-    }
-
-    /**
-     * 342. Power of Four 先判断是否是2的power，再判断为1的位是否落入偶数位
-     *
-     * @param num
-     * @return
-     */
-    public boolean isPowerOfFour(int num) {
-        if (num == 0) return false;
-        if ((num & (-num)) != num) return false;
-        if ((num & 0x55555555) == 0) return false;
-        return true;
     }
 }

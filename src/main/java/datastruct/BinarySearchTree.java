@@ -1,112 +1,142 @@
 package datastruct;
 
-import java.util.NoSuchElementException;
+import util.BinaryTreeNode;
+import util.TreeUtil;
 
 public class BinarySearchTree<E extends Comparable<E>> {
-    private static class Node<E extends Comparable<E>>{
-        E val;
-        Node<E> left;
-        Node<E> right;
 
-        public Node(){}
-        public Node(E val){ this.val=val;}
-    }
-
-    private Node<E> root;
+    private BinaryTreeNode<E> root;
     private int size;
 
-    public void add(E val){
-        root=add(root,val);
-        size++;
-    }
-    private Node<E> add(Node<E> root,E val){
-        if(root==null)
-            return new Node<>(val);
-        if(val.compareTo(root.val)<0)
-            root.left=add(root.left,val);
-        else if(val.compareTo(root.val)>0)
-            root.right=add(root.right,val);
+    public BinaryTreeNode<E> getRoot() {
         return root;
     }
 
-    public int size(){
+    public void add(E val) {
+        root = add(root, val);
+        size++;
+    }
+
+    private BinaryTreeNode<E> add(BinaryTreeNode<E> root, E val) {
+        if (root == null) {
+            return new BinaryTreeNode<>(val);
+        }
+        int cp = val.compareTo(root.value);
+        if (cp < 0) {
+            root.left = add(root.left, val);
+        } else if (cp > 0) {
+            root.right = add(root.right, val);
+        }
+        return root;
+    }
+
+    public int size() {
         return size;
     }
 
-    public boolean contains(E val){
-        return contains(root,val);
+    public boolean contains(E val) {
+        return contains(root, val);
     }
-    private boolean contains(Node<E> root,E val){
-        if(root==null)
+
+    private boolean contains(BinaryTreeNode<E> root, E val) {
+        if (root == null) {
             return false;
-        int res=root.val.compareTo(val);
-        if(res==0)
-            return true;
-        else if(res<0)
-            return contains(root.left,val);
-        else
-            return contains(root.right,val);
-    }
-
-    public E minVal(){
-        Node<E> cur=root;
-        if(cur==null) throw  new NoSuchElementException();
-        while(cur.left!=null)
-            cur=cur.left;
-        return cur.val;
-    }
-
-    public E maxVal(){
-        Node<E> cur=root;
-        if(cur==null) throw  new NoSuchElementException();
-        while(cur.right!=null){
-            cur=cur.right;
         }
-        return cur.val;
+        int cp = val.compareTo(root.value);
+        if (cp < 0) {
+            return contains(root.left, val);
+        } else if (cp > 0) {
+            return contains(root.right, val);
+        } else {
+            return true;
+        }
     }
 
-    private Node<E> removeMin() {
-        Node<E> cur=root;
-        if(cur==null) return root;
-        Node<E> parent=cur;
-        while (cur.left!=null) {
-            parent=cur;
+
+    public E minVal() {
+        BinaryTreeNode<E> minBinaryTreeNode = findMin(root);
+        return minBinaryTreeNode == null ? null : minBinaryTreeNode.value;
+    }
+
+    public E maxvalue() {
+        BinaryTreeNode<E> maxBinaryTreeNode = findMax(root);
+        return maxBinaryTreeNode == null ? null : maxBinaryTreeNode.value;
+    }
+
+    private BinaryTreeNode<E> findMin(BinaryTreeNode<E> root) {
+        BinaryTreeNode<E> cur = root;
+        if (cur == null) {
+            return null;
+        } else {
+            while (cur.left != null)
+                cur = cur.left;
+            return cur;
+        }
+    }
+
+    private BinaryTreeNode<E> findMax(BinaryTreeNode<E> root) {
+        BinaryTreeNode<E> cur = root;
+        if (cur == null) {
+            return null;
+        } else {
+            while (cur.right != null) {
+                cur = cur.right;
+            }
+            return cur;
+        }
+    }
+
+    private BinaryTreeNode<E> removeMin(BinaryTreeNode<E> root) {
+        BinaryTreeNode<E> cur = root;
+        if (cur == null) {
+            return null;
+        }
+        BinaryTreeNode<E> parent = cur;
+        while (cur.left != null) {
+            parent = cur;
             cur = cur.left;
         }
-        Node res=cur;
-        if(cur==parent){
-            root=cur.right;
-            cur.right=null;
-        }else
-            parent.left=null;
-        return res;
+        BinaryTreeNode<E> min = cur;
+        if (min == parent) {//根节点是最小
+            return min.right;
+        } else {
+            parent.left = min.right;
+            return root;
+        }
     }
 
-    public Node<E> remove(Node<E> root,E val){
-        if(root==null)
-            return root;
-        int comp=root.val.compareTo(val);
-        if(comp==0){
-            Node newroot;
-            if(root.left==null){
-                newroot=root.right;
-                root.right=null;
-            }else if(root.right==null){
-                newroot=root.left;
-                root.left=null;
-                size--;
-            }else{
-                newroot=removeMin();
-                newroot.left=root.left;
-                newroot.right=root.right;
-                root.left=root.right=null;
-            }
-            size--;
-            return newroot;
+    public BinaryTreeNode<E> remove(BinaryTreeNode<E> root, E value) {
+        if (root == null) {
+            return null;
         }
-        else if(comp<0)
-            return remove(root.left,val);
-        else
-            return remove(root.right,val);
+        int comp = root.value.compareTo(value);
+        if (comp < 0) {
+            root.left = remove(root.left, value);
+        } else if (comp > 0) {
+            root.right = remove(root.right, value);
+        } else if (root.left != null && root.right != null) {
+            E minVal = findMin(root.right).value;
+            root.value = minVal;
+            root.right = remove(root.right, minVal);
+            size--;
+        } else {
+            root = (root.left != null) ? root.left : root.right;
+            size--;
+        }
+        return root;
+    }
+
+
+    public static void main(String[] args) {
+        BinarySearchTree<Integer> bst=new BinarySearchTree<>();
+        bst.add(1);
+        bst.add(3);
+        bst.add(2);
+        bst.add(9);
+        bst.add(8);
+        bst.add(6);
+        bst.add(7);
+        String s=TreeUtil.inview(bst.getRoot());
+        System.out.println(s);
     }
 }
